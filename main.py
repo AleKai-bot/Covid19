@@ -9,8 +9,8 @@ import pandas as pd
 
 app = dash.Dash(__name__)
 
-dfCoor = json.load(open(r"C:\Users\Usuario\Desktop\PythonDataAnalisis\Proyecto\Cantones_de_Costa_Rica.geojson", "r"))
-dataActive = pd.read_csv(r'C:\Users\Usuario\Desktop\PythonDataAnalisis\Proyecto\ACTIVOS.csv', delimiter=';',
+dfCoor = json.load(open(r"C:\Users\crisp\Desktop\Proyecto\Covid19\Cantones_de_Costa_Rica.geojson", "r"))
+dataActive = pd.read_csv(r'C:\Users\crisp\Desktop\Proyecto\Covid19\ACTIVOS.csv', delimiter=';',
                          encoding='latin-1')
 
 dataActive["canton"] = dataActive["canton"].str.upper()
@@ -109,7 +109,7 @@ def update_graph(option_slctd, date):
         color_continuous_scale="geyser"
     )
 
-    fig.update_geos(showcountries=False, showcoastlines=True, showland=False, fitbounds="locations")
+    fig.update_geos(showcountries=False, showcoastlines=False, showland=False, fitbounds="locations")
     return container, container2, fig  # add breakpoint
 
 
