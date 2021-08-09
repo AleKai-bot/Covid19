@@ -18,6 +18,8 @@ dataActive["Total"] = dataActive.iloc[:, -1]
 dda = dataActive.groupby(['provincia']).sum()
 
 total_prov = 0
+
+
 def updateDict(x):
     global total_prov
     total_prov = {
@@ -29,6 +31,7 @@ def updateDict(x):
         'Puntarenas': dda.loc['Puntarenas', x],
         'Limon': dda.loc['Limon', x]
     }
+
 
 # App layout
 app.layout = html.Div([
@@ -63,6 +66,7 @@ app.layout = html.Div([
     dcc.Graph(id='cr_map', figure={})
 ])
 
+
 @app.callback(
     [Output(component_id='output_container', component_property='children'),
      Output(component_id='output_container2', component_property='children'),
@@ -72,7 +76,6 @@ app.layout = html.Div([
      ]
 )
 def update_graph(option_slctd, date):
-
     updateDict(formatDate(date))
     container = "Costa rica"
     container2 = 'Total de casos: {}'.format(sum(total_prov.values()))
@@ -107,13 +110,13 @@ def update_graph(option_slctd, date):
     )
 
     fig.update_geos(showcountries=False, showcoastlines=True, showland=False, fitbounds="locations")
-
     return container, container2, fig  # add breakpoint
 
 
 def formatDate(dates):
     aux = dates.split('-')
     return aux[2] + '/' + aux[1] + '/' + aux[0]
+
 
 if __name__ == '__main__':
     app.run_server(debug=False)
