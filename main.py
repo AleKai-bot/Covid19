@@ -101,14 +101,14 @@ app.layout = html.Div([
      ]
 )
 def update_graph(option_slctd, date):
-    updateDict(formatDate(date))
+    updateDict(formatDate(date,True))
     container = "Costa rica"
     container2 = 'Total de casos: {}'.format(sum(total_prov.values()))
-    container3 = 'Fecha: ' + formatDate(date)
+    container3 = 'Fecha: ' + formatDate(date,False)
 
     dff = dataActive.copy()
 
-    dffDates = dff.loc[:, [formatDate(date)]]
+    dffDates = dff.loc[:, [formatDate(date,True)]]
     dffDates["Total"] = dffDates.iloc[:, -1]
     dffHeader = dff.loc[:, :'canton']
     dff = pd.concat([dffHeader, dffDates], axis=1)
@@ -133,9 +133,12 @@ def update_graph(option_slctd, date):
     return container, container2, container3, fig  # add breakpoint
 
 
-def formatDate(dates):
+def formatDate(dates, a):
     aux = dates.split('-')
-    return aux[2] + '/' + aux[1] + '/' + aux[0]
+    df = aux[1] + '/' + aux[2] + '/' + aux[0]
+    if a:
+        df = aux[2] + '/' + aux[1] + '/' + aux[0]
+    return df
 
 
 if __name__ == '__main__':

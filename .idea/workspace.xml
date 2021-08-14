@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="673dc057-0d53-40f2-8fbd-0dac4a9eb713" name="Changes" comment="Update main.py">
+    <list default="true" id="673dc057-0d53-40f2-8fbd-0dac4a9eb713" name="Changes" comment="Add dbc.Alert align Dropdown and DatePicker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -81,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628536084594</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add dbc.Alert align Dropdown and DatePicker">
+      <created>1628732504068</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1628732504068</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -99,6 +106,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Create env to run main.py" />
     <MESSAGE value="Update main.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update main.py" />
+    <MESSAGE value="Add dbc.Alert align Dropdown and DatePicker" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add dbc.Alert align Dropdown and DatePicker" />
   </component>
 </project>
