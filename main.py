@@ -13,8 +13,8 @@ app = dash.Dash(
     external_stylesheets=[dbc.themes.BOOTSTRAP]
 )
 
-dfCoor = json.load(open(r"C:\Users\crisp\Desktop\Proyecto\Covid19\Cantones_de_Costa_Rica.geojson", "r"))
-dataActive = pd.read_csv(r'C:\Users\crisp\Desktop\Proyecto\Covid19\ACTIVOS.csv', delimiter=';',
+dfCoor = json.load(open(r"C:\Users\Usuario\Desktop\PythonDataAnalisis\Proyecto\Cantones_de_Costa_Rica.geojson", "r"))
+dataActive = pd.read_csv(r'C:\Users\Usuario\Desktop\PythonDataAnalisis\Proyecto\ACTIVOS.csv', delimiter=';',
                          encoding='latin-1')
 
 dataActive["canton"] = dataActive["canton"].str.upper()
@@ -39,54 +39,53 @@ def updateDict(x):
 
 # App layout
 app.layout = html.Div([
-    html.H1("Active Covid 19 cases Costa Rica", style={'text-align': 'center'}),
-    html.Div(children=[
-        html.Div(children=[
-            dcc.Dropdown(id="select_provincia",
-                         options=[
-                             {"label": "San Jose", "value": "San Jose"},
-                             {"label": "Alajuela", "value": "Alajuela"},
-                             {"label": "Heredia", "value": "Heredia"},
-                             {"label": "Cartago", "value": "Cartago"},
-                             {"label": "Guanacaste", "value": "Guanacaste"},
-                             {"label": "Puntarenas", "value": "Puntarenas"},
-                             {"label": "Limon", "value": "Limon"},
-                             {"label": "General CR", "value": "Todos"}],
-                         multi=False,
-                         value="Todos",
-                         placeholder="Provincia"
-                         )],
-            style={'width':'20%','margin-left': '3vw', 'display': 'inline-block', 'vertical-align': 'top'}),
-        html.Div(children=[
-        dcc.DatePickerSingle(
-            id='my-date-picker-single',
-            min_date_allowed=date(2020, 4, 21),
-            max_date_allowed=date(2021, 7, 30),
-            initial_visible_month=date(2020, 4, 21),
-            date=date(2021, 7, 30)
-        )],
-        style={'width':'40%', 'margin-left': '3vw', 'display': 'inline-block', 'vertical-align': 'top'})
-    ]),
+    html.H1("Active Covid 19 Cases of Costa Rica", style={'text-align': 'center'}),
+    dcc.Dropdown(id="select_provincia",
+                 options=[
+                     {"label": "San Jose", "value": "San Jose"},
+                     {"label": "Alajuela", "value": "Alajuela"},
+                     {"label": "Heredia", "value": "Heredia"},
+                     {"label": "Cartago", "value": "Cartago"},
+                     {"label": "Guanacaste", "value": "Guanacaste"},
+                     {"label": "Puntarenas", "value": "Puntarenas"},
+                     {"label": "Limon", "value": "Limon"},
+                     {"label": "General CR", "value": "Todos"}],
+                 multi=False,
+                 value="Todos",
+                 placeholder="Provincia",
+                 style={
+                     'width': "40%",
+                     'margin-left': "3%"
+                 }
+                 ),
+    html.Br(),
+    dcc.DatePickerSingle(
+        id='my-date-picker-single',
+        min_date_allowed=date(2020, 4, 21),
+        max_date_allowed=date(2021, 7, 30),
+        initial_visible_month=date(2020, 4, 21),
+        date=date(2021, 7, 30),
+        style={
+            'width': "40%",
+            'margin-left': "4%"
+        }
+    ),
+    html.Br(),
     html.Br(),
     dcc.Graph(id='cr_map', figure={}),
     dbc.Alert([
-        html.Div(id='output_container', children=[]),
+        html.H4(id='output_container', children=[]),
         html.Div(id='output_container2', children=[]),
-        html.Div(id='output_container3', children=[])
+        html.Div(id='output_container3', children=[]),
     ],
-        color="primary",
-        style={'text-align': 'center', 'offset': 3, 'size': 6}
+        style={'text-align': 'center', 'color': 'black', 'background-color': '#DEE0E3'}
     )
 
-    # dbc.Row(
-    #         dbc.Col([
-    #             html.Div(id='output_container', children=[]),
-    #             html.Div(id='output_container2', children=[]),
-    #             html.Div(id='output_container3', children=[])],
-    #             width={"size": 6, "offset": 3}
-    #             # style={'text-align': 'center', 'offset': 3, 'size': 6}
-    #         ))
-])
+],
+    style={
+        'background-color': '#DEE0E3'
+    }
+)
 
 
 @app.callback(
@@ -101,21 +100,21 @@ app.layout = html.Div([
      ]
 )
 def update_graph(option_slctd, date):
-    updateDict(formatDate(date,True))
-    container = "Costa rica"
+    updateDict(formatDate(date, True))
+    container = "Costa Rica"
     container2 = 'Total de casos: {}'.format(sum(total_prov.values()))
-    container3 = 'Fecha: ' + formatDate(date,False)
+    container3 = 'Fecha: ' + formatDate(date, False)
 
     dff = dataActive.copy()
 
-    dffDates = dff.loc[:, [formatDate(date,True)]]
+    dffDates = dff.loc[:, [formatDate(date, True)]]
     dffDates["Total"] = dffDates.iloc[:, -1]
     dffHeader = dff.loc[:, :'canton']
     dff = pd.concat([dffHeader, dffDates], axis=1)
 
     if option_slctd != "Todos":
         dff = dff[dff["provincia"] == option_slctd]
-        container = "Provincia: {}".format(option_slctd)
+        container = format(option_slctd)
         container2 = "Total de casos: {}".format(total_prov[option_slctd])
 
     # Plotly Express
@@ -128,7 +127,12 @@ def update_graph(option_slctd, date):
         color="Total",  # El color depende de las cantidades
         color_continuous_scale="geyser"
     )
+    fig.update_layout(
 
+        paper_bgcolor='white',
+        font_color='black'
+    )
+    fig.update_layout(margin={'l': 40, 'b': 15, 't': 10, 'r': 0}, hovermode='closest')
     fig.update_geos(showcountries=False, showcoastlines=False, showland=False, fitbounds="locations")
     return container, container2, container3, fig  # add breakpoint
 
